@@ -1,2 +1,2 @@
 # COMPX301Ass1
-Compx201 first assignment
+Compx301 first assignment

@@ -1,9 +1,7 @@
-import java.lang.reflect.Array;
 import java.util.Arrays;
 // Create a Main class
 public class MyMinHeap {
   int heapSize;  // Create a class attribute
-  int size =0; 
   int next; 
   String [] storage; //Where the lines are stored
 
@@ -26,7 +24,7 @@ public class MyMinHeap {
     public void insert(String line){
         next++;
         int i = next;  
-        storage[i] =line;
+        storage[i] = line;
         String temp; 
         while(i > 1 && storage[i].compareTo(storage[i/2])<0){
             temp = storage[i];
@@ -41,7 +39,7 @@ public class MyMinHeap {
             return null; 
         }
         String deletedroot = storage[1];  
-        storage[1] = storage[next]; 
+        storage[1] = storage[next];
         //Decrement next 
         next--;
         int i = 1;
@@ -60,8 +58,9 @@ public class MyMinHeap {
         return storage[1];
     }
 
-    public void load(String [] newStorage){
+    public void load(String [] newStorage, int newNext){
         storage = newStorage;
+        next = newNext-1;
         reheap(1);
     }
 
@@ -90,7 +89,7 @@ public class MyMinHeap {
 
 
     public int getSize(){
-        return next; 
+        return next;
     }
 
     public void print(){

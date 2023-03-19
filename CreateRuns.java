@@ -18,46 +18,39 @@ class CreateRuns {
         try {
             // Filling the heap
             // While reader not at EOF and heap is not full
-            while ((line=reader.readLine())!=null && heap.getSize() < runLength) {
-                heap.insert(line); // insert line into heap
+            while ((line=reader.readLine()) != null && heap.getSize() < runLength) {
+                if (!line.isEmpty()) {
+                    heap.insert(line); // insert line into heap
+                }
             }
-            
             // Organise heap before creating runs
             heap.reheap(1);
-            // Read one line at a time, stop once EOF has been reached
-            while ((line=reader.readLine())!=null) {
-                // if heap plus ttracker are smaller than run length, insert into heap
-                if (heap.getSize()+tTracker < runLength) {
-                    // only insert if new line is larger than last line
-                    if (datum.compareTo(line)<0){
-                        heap.replace(line);
-                    } else { // otherwise move into temp array
-                        tempArray[tTracker] = line;
-                        tTracker++; // increment tracking var
-                    }
-                // if tempArray is not equal to heap size
-                } else if (tTracker != runLength) {
-                    datum = heap.peek(); // get root value
-                    writer.write(datum); // write to buffer
-                } else { // temp array is heap size
-                    writer.flush(); // flush buffer for new run
-                    heap.load(tempArray); // load array into (now) empty heap
-                    tempArray = new String[runLength]; // empty temp array
-                    tTracker = 0; // reset tracking var
-                }
-            }
-            // if eof was reached but heap wasn't emptied
+
+            // While the heap isnt empty
             while (heap.getSize() > 0) {
-                writer.write(heap.remove()); // get root node and write to buffer
-            }
-            // if temp array also had stuff in it, use to make a final run
-            if (tTracker > 0) {
-                heap.load(tempArray); // load array into heap
-                while (heap.getSize() > 0) { // until heap is empty
-                    writer.write(heap.remove()); // get root node and write to buffer
+                // While the heap isnt empty and reading until the EOF is reached
+                while (heap.getSize() > 0 && (line = reader.readLine())!=null) {
+                    if (!line.isEmpty()) { // if the line isnt empty
+                        datum = heap.remove(); // get the topmost item from the heap
+                        writer.write(datum); // write to buffer
+                        writer.newLine(); // go to next line
+
+                        // if new line from input is larger than just written line
+                        if (line.compareTo(datum) > 0) {
+                            heap.insert(line); // insert line into heap
+                        } else {
+                            tempArray[tTracker] = line; // otherwise put in side array
+                            tTracker++; // increment array tracker
+                        }
+                    }
                 }
-            }
-            writer.flush(); // flush buffer to standard output
+                writer.flush(); // Empty buffer and push text to std output
+                // System.out.println(":-----------------------------:"); // Testing the start of a new run
+                heap.load(tempArray, tTracker); // load array into heap
+                tempArray = new String[runLength]; // re-init array
+                tTracker = 0; // re-init array tracker
+            } 
+
         } catch (IOException e) {
             // Print error message
             System.err.println(e.getMessage());

@@ -28,13 +28,14 @@ class CreateRuns {
 
             // While the heap isnt empty
             while (heap.getSize() > 0) {
-                // While the heap isnt empty and reading until the EOF is reached
-                while (heap.getSize() > 0 && (line = reader.readLine())!=null) {
-                    if (!line.isEmpty()) { // if the line isnt empty
-                        datum = heap.remove(); // get the topmost item from the heap
-                        writer.write(datum); // write to buffer
-                        writer.newLine(); // go to next line
+                // While the heap isnt empty
+                while (heap.getSize() > 0) {
+                    datum = heap.remove(); // get the topmost item from the heap
+                    writer.write(datum); // write to buffer
+                    writer.newLine(); // go to next line
 
+                    line = reader.readLine(); // read line in from std input
+                    if (line!=null && !line.isEmpty()) { // if the line isnt empty and havent reached eof
                         // if new line from input is larger than just written line
                         if (line.compareTo(datum) > 0) {
                             heap.insert(line); // insert line into heap

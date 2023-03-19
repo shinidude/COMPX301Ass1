@@ -1,7 +1,7 @@
 
 // Create a Main class
 public class MyMinHeap {
-  int heapVal;  // Create a class attribute
+  int heapSize;  // Create a class attribute
   int size =0; 
   int next; 
   String [] storage; //Where the lines are stored
@@ -9,11 +9,11 @@ public class MyMinHeap {
 
   // Create a class constructor for the Main class
     public MyMinHeap(int heapVal){
-        if(heapVal > 31 || heapVal<1 ){
+        if(heapSize > 31 || heapSize<1 ){
             heapVal = 31; 
         }
         next=0;
-        storage = new String [heapVal+1]; 
+        storage = new String [heapSize+1]; 
     }
 
     //insert(), remove(), replace(), peek(), load() and reheap()
@@ -32,18 +32,11 @@ public class MyMinHeap {
             i = i/2;
         }
     }
-    
-    // swap root with the last element 
-    // - decrement N i := N 
-    // - While i has children && out of 
-    //     heap order with children 
-    // //iX2: determining if i has children 
-    //         -Then swap with the smallest child 
+
     public String remove(){
-        // if(next < 1){
-        //     return ; 
-        // }
-        //Swap the root with the last element
+        if(next < 1){
+            System.out.println("Array is empty"); 
+        }
         String deletedroot = storage[1];  
         storage[1] = storage[storage.length]; 
         //Decrement next 
@@ -64,8 +57,9 @@ public class MyMinHeap {
         return storage[1];
     }
 
-    public void load(){
-        
+    public void load(String [] newStorage){
+        storage = newStorage;
+        reheap(1);
     }
 
     public void reheap(int i){

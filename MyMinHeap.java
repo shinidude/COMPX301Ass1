@@ -86,7 +86,7 @@ public class MyMinHeap {
     }
 
 
-    public int getlength(){
-        return storage.length; 
+    public int getSize(){
+        return next; 
     }
 }

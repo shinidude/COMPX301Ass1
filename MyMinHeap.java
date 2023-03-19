@@ -9,8 +9,10 @@ public class MyMinHeap {
 
   // Create a class constructor for the Main class
     public MyMinHeap(int heapVal){
-        if(heapSize > 31 || heapSize<1 ){
-            heapVal = 31; 
+        if(heapVal<1 ){
+            heapSize = 31; 
+        } else {
+            heapSize = heapVal;
         }
         next=0;
         storage = new String [heapSize+1]; 
@@ -35,8 +37,9 @@ public class MyMinHeap {
 
     public String remove(){
         if(next < 1){
-            System.out.println("Array is empty"); 
+            return null; 
         }
+        
         String deletedroot = storage[1];  
         storage[1] = storage[storage.length]; 
         //Decrement next 

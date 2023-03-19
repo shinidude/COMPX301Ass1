@@ -1,55 +1,98 @@
-final MAX_HEAP_VAL = 31; 
+
 // Create a Main class
 public class MyMinHeap {
   int heapVal;  // Create a class attribute
   int size =0; 
-  int[] storage; 
+  int next; 
+  String [] storage; //Where the lines are stored
 
 
   // Create a class constructor for the Main class
     public MyMinHeap(int heapVal){
-        if(heapVal > MAX_HEAP_VAL || heapVal<1 ){
-            heapVal = MAX_HEAP_VAL; 
+        if(heapVal > 31 || heapVal<1 ){
+            heapVal = 31; 
         }
-        int[] storage = new int [heapVal]; 
+        next=0;
+        storage = new String [heapVal+1]; 
     }
 
     //insert(), remove(), replace(), peek(), load() and reheap()
-    public void insert(int x){
-
-        //if the storage array is emoty then insert the value
-        //in the first space
-        if(storage.length ==0){
-            storage[1] == x; 
+    // while(i>1 && H[i] < H[i/2])
+	// swap i with i/2
+	// set i to i/2
+    public void insert(String line){
+        next++;
+        int i = next;  
+        storage[i] =line;
+        String temp; 
+        while(i > 1 && storage[i].compareTo(storage[i/2])<0){
+            temp = storage[i];
+            storage[i] = storage[i/2];
+            storage[i/2] = temp;
+            i = i/2;
         }
-        for(int i = 0; i>storageArray.length; i++){
-
-        } 
+    }
+    
+    // swap root with the last element 
+    // - decrement N i := N 
+    // - While i has children && out of 
+    //     heap order with children 
+    // //iX2: determining if i has children 
+    //         -Then swap with the smallest child 
+    public String remove(){
+        // if(next < 1){
+        //     return ; 
+        // }
+        //Swap the root with the last element
+        String deletedroot = storage[1];  
+        storage[1] = storage[storage.length]; 
+        //Decrement next 
+        next--;
+        int i =  1;
+        reheap(i);   
+        return deletedroot; 
     }
 
-
-    public void remove(int x){
-
+    public void replace(String line){
+        //replace the first node in the array 
+        storage[1] = line; 
+       //restore the heap order
+       reheap(1);
     }
 
-    public void replace(int x){
-
-    }
-
-    public int peak(){
-        
+    public String peek(){
+        return storage[1];
     }
 
     public void load(){
         
     }
 
-    public void reheap(){
-
+    public void reheap(int i){
+        String temp; 
+        int leftChild = i*2; 
+        int rightChild= (2*i)+1; 
+        while( 2*i < next){
+            //if the left child is smaller than the node I and the right child 
+            if(storage[i].compareTo(storage[leftChild]) > 0 && storage[leftChild].compareTo(storage[rightChild])<0){
+                temp = storage[i];
+                storage[i] = storage[leftChild]; 
+                storage[leftChild] = temp; 
+            }
+           else if(storage[i].compareTo(storage[rightChild])>0&& storage[rightChild].compareTo(storage[leftChild])<0){
+            //if the right child is smaller than node i and theleft child 
+                temp = storage[i];
+                storage[i] = storage[rightChild]; 
+                storage[rightChild] = temp;
+            }
+            else{
+                break;
+            }
+        }
     }
 
-    private void left-parent(int x){
 
+    public int getlength(){
+        return storage.length; 
     }
-
 }

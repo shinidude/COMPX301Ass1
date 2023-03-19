@@ -1,4 +1,5 @@
-
+import java.lang.reflect.Array;
+import java.util.Arrays;
 // Create a Main class
 public class MyMinHeap {
   int heapSize;  // Create a class attribute
@@ -39,12 +40,11 @@ public class MyMinHeap {
         if(next < 1){
             return null; 
         }
-        
         String deletedroot = storage[1];  
-        storage[1] = storage[storage.length]; 
+        storage[1] = storage[next]; 
         //Decrement next 
         next--;
-        int i =  1;
+        int i = 1;
         reheap(i);   
         return deletedroot; 
     }
@@ -91,5 +91,9 @@ public class MyMinHeap {
 
     public int getSize(){
         return next; 
+    }
+
+    public void print(){
+        System.out.println(Arrays.toString(storage));
     }
 }

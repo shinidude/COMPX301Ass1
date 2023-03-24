@@ -5,9 +5,9 @@ import java.util.List;
 
 public class DistributeRuns {
 
-    int numFiles =0; 
+    int numFiles = 0; 
     FileWriter[] filesArray;
-    int fileTracker=0; 
+    int fileTracker = 0; 
 
     public DistributeRuns(int x){
         // takes a positive integer greater than 1.
@@ -23,7 +23,7 @@ public class DistributeRuns {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            System.out.println(filesArray[i]);
+            // System.out.println(filesArray[i]);
         }
     }
 
@@ -34,42 +34,31 @@ public class DistributeRuns {
 
         String line = ""; 
         String prevLine="";
-        List <String> runs  = new ArrayList<>();
+        List <String> run  = new ArrayList<String>();
         //While not of end of stream
         try {
-            while((line=reader.readLine())!=null){
-                runs.add(line);
-
-                //Determine end of run 
-                // if(line.compareTo(prevLine)<0){
-                //     writer.flush();
-                //     //Determine if need to change files
-                //     if(fileTracker<(filesArray.length-1)){
-                //         fileTracker++; //Moving to the next file 
-                //     }
-                //     else{
-                //         fileTracker=0;
-                //     }
-                //     runs.clear();
-                //     writer =  new BufferedWriter(filesArray[fileTracker]);
-                // }else{
-                //     for (String string : runs) {
-                //         writer.write(string);
-                //         writer.newLine();
-                //         System.out.println(string);
-                //     }
-                //     prevLine = line;
-                // }
-            }
-            int evenRuns = runs.size()/numFiles;
-
-            for(int i = 0; i<filesArray.length; i++){
-                writer = new BufferedWriter(filesArray[i]);
-                for(int n = 0; n < evenRuns; n++){
-                    writer.write(runs.get(n));
-                    writer.newLine();
+            while((line=reader.readLine()) != null){
+                if (line.equals("[##############################################]")) {
+                    for (int i=0 ; i < run.size() ; i++) {
+                        writer.write(run.get(i));
+                        writer.newLine();
+                        // System.out.println(run.get(i)); // For testing that runs are read properly
+                    }
+                    // System.out.println("[----------------------------------------------]");
+                    // writer.write("[----------------------------------------------]");
+                    // writer.newLine(); // this and the last line to see where each run ends in the files.
+                    writer.flush();
+                    run = new ArrayList<String>();
+                    if (fileTracker < filesArray.length-1) {
+                        fileTracker++;
+                    } else {
+                        fileTracker = 0;
+                    }
+                    writer = new BufferedWriter(filesArray[fileTracker]);
+                } else {
+                    run.add(line);
+                    prevLine = line;
                 }
-                evenRuns = runs.size()/numFiles;
             }
         }catch(IOException e){
               e.printStackTrace();

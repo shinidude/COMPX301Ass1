@@ -26,20 +26,14 @@ class CreateRuns {
 
             // While the heap isnt empty
             while (heap.getSize() > 0) {
-<<<<<<< Updated upstream
                 // While the heap isnt empty
                 while (heap.getSize() > 0) {
-=======
-                // While the heap isnt empty and reading until the EOF is reached
-                while (heap.getSize() > 0 && (line = reader.readLine())!=null) {
->>>>>>> Stashed changes
                     datum = heap.remove(); // get the topmost item from the heap
                     writer.write(datum); // write to buffer
                     writer.newLine(); // go to next line
 
-<<<<<<< Updated upstream
                     line = reader.readLine(); // read line in from std input
-                    if (line!=null && !line.isEmpty()) { // if the line isnt empty and havent reached eof
+                    if (line!=null) { // if the line isnt empty and havent reached eof
                         // if new line from input is larger than just written line
                         if (line.compareTo(datum) > 0) {
                             heap.insert(line); // insert line into heap
@@ -47,18 +41,11 @@ class CreateRuns {
                             tempArray[tTracker] = line; // otherwise put in side array
                             tTracker++; // increment array tracker
                         }
-=======
-                    // if new line from input is larger than just written line
-                    if (line.compareTo(datum) > 0) {
-                        heap.insert(line); // insert line into heap
-                    } else {
-                        tempArray[tTracker] = line; // otherwise put in side array
-                        tTracker++; // increment array tracker
->>>>>>> Stashed changes
                     }
                 }
+                writer.write("[##############################################]");
+                writer.newLine();
                 writer.flush(); // Empty buffer and push text to std output
-                // System.out.println(":-----------------------------:"); // Testing the start of a new run
                 heap.load(tempArray, tTracker); // load array into heap
                 tempArray = new String[runLength]; // re-init array
                 tTracker = 0; // re-init array tracker

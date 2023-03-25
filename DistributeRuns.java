@@ -32,8 +32,7 @@ public class DistributeRuns {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(filesArray[fileTracker]);
 
-        String line = ""; 
-        String prevLine="";
+        String line = "";
         List <String> run  = new ArrayList<String>();
         //While not of end of stream
         try {
@@ -57,7 +56,6 @@ public class DistributeRuns {
                     writer = new BufferedWriter(filesArray[fileTracker]);
                 } else {
                     run.add(line);
-                    prevLine = line;
                 }
             }
         }catch(IOException e){

@@ -1,9 +1,12 @@
 public class MergeRuns {
- 
-    public MergeRuns( int x){
-        if(x<1){
-            System.out.println("Number must be positive");
-            return; 
+    public static void main(String[] args) {
+        try {
+            DistributeRuns db = new DistributeRuns(Integer.parseInt(args[0]));
+        } catch (Exception e) {
+            e.printStackTrace();
+            DistributeRuns db = new DistributeRuns(2);
         }
+
+        
     }
 }

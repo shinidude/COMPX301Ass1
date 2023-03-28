@@ -1,12 +1,13 @@
 public class MergeRuns {
     public static void main(String[] args) {
+        DistributeRuns db;
         try {
-            DistributeRuns db = new DistributeRuns(Integer.parseInt(args[0]));
+            db = new DistributeRuns(Integer.parseInt(args[0]));
         } catch (Exception e) {
             e.printStackTrace();
-            DistributeRuns db = new DistributeRuns(2);
+            db = new DistributeRuns(2);
         }
 
-        
+        db.DR();
     }
 }

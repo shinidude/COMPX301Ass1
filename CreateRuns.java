@@ -43,8 +43,9 @@ class CreateRuns {
                         }
                     }
                 }
+                // Signal end of run
                 writer.write("[##############################################]");
-                writer.newLine();
+                writer.newLine(); // Go to new line
                 writer.flush(); // Empty buffer and push text to std output
                 heap.load(tempArray, tTracker); // load array into heap
                 tempArray = new String[runLength]; // re-init array

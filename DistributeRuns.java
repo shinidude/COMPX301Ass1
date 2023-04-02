@@ -1,10 +1,10 @@
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DistributeRuns {
 
+    // define property vars
     int numFiles = 0; 
     FileWriter[] filesArray;
     int fileTracker = 0; 
@@ -15,47 +15,45 @@ public class DistributeRuns {
           numFiles=2;
         }
         numFiles= x; 
+        // init array to hold files
         filesArray = new FileWriter [numFiles];
-        for(int i=0; i<filesArray.length; i++){
+        for(int i=0; i<filesArray.length; i++){ // Loop for as long as the array is
             try {
-                filesArray[i] = new FileWriter("temp"+i+".txt");
+                filesArray[i] = new FileWriter("temp"+i+".txt"); // Create temp file for distribution
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            // System.out.println(filesArray[i]);
         }
     }
 
     public void DR(){
-        //Reads the file 
+        // define and init std input reader and file writer
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(filesArray[fileTracker]);
 
-        String line = "";
-        List <String> run  = new ArrayList<String>();
-        //While not of end of stream
+        String line = ""; // Line being read
+        List <String> run  = new ArrayList<String>();  // Array to hold run
         try {
+            //While not end of stream
             while((line=reader.readLine()) != null){
+                // If line read is end of run signal
                 if (line.equals("[##############################################]")) {
-                    for (int i=0 ; i < run.size() ; i++) {
-                        writer.write(run.get(i));
-                        writer.newLine();
-                        // System.out.println(run.get(i)); // For testing that runs are read properly
+                    for (int i=0 ; i < run.size() ; i++) { // loop for as long as array
+                        writer.write(run.get(i)); // write line from run to std output
+                        writer.newLine(); // Go to new line
                     }
-                    // System.out.println("[----------------------------------------------]");
-                    // writer.write("[----------------------------------------------]");
-                    // writer.newLine(); // this and the last line to see where each run ends in the files.
+                    // flush buffer and re-init run arraylist
                     writer.flush();
                     run = new ArrayList<String>();
-                    if (fileTracker < filesArray.length-1) {
-                        fileTracker++;
+                    if (fileTracker < filesArray.length-1) { // If file tracker is not at end of files array
+                        fileTracker++; // Increment tracker
                     } else {
-                        fileTracker = 0;
+                        fileTracker = 0; // reset tracker
                     }
+                    // re-init writer to new file
                     writer = new BufferedWriter(filesArray[fileTracker]);
                 } else {
-                    run.add(line);
+                    run.add(line);  // Add line to run
                 }
             }
         }catch(IOException e){
